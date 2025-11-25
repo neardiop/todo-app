@@ -1,1 +1,17 @@
-<p>todos works!</p>
+<div class="container">
+  <h1>Liste des Tâches</h1>
+  <button (click)="openModal()" class="btn-add">Ajouter une tâche</button>
+  
+  <ng2-smart-table 
+    [settings]="settings" 
+    [source]="todos"
+    (custom)="onCustomAction($event)">
+  </ng2-smart-table>
+
+  <app-todo-modal 
+    *ngIf="showModal"
+    [todo]="selectedTodo"
+    (save)="onSave($event)"
+    (close)="closeModal()">
+  </app-todo-modal>
+</div>

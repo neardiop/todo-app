@@ -1,1 +1,17 @@
-<p>persons works!</p>
+<div class="container">
+  <h1>Liste des Personnes</h1>
+  <button (click)="openModal()" class="btn-add">Ajouter une personne</button>
+  
+  <ng2-smart-table 
+    [settings]="settings" 
+    [source]="persons"
+    (custom)="onCustomAction($event)">
+  </ng2-smart-table>
+
+  <app-person-modal 
+    *ngIf="showModal"
+    [person]="selectedPerson"
+    (save)="onSave($event)"
+    (close)="closeModal()">
+  </app-person-modal>
+</div>

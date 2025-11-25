@@ -1,1 +1,73 @@
-<p>todo-modal works!</p>
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>{{ todo ? 'Éditer' : 'Ajouter' }} une tâche</h2>
+    
+    <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Titre *</label>
+        <input type="text" formControlName="title" />
+        <span class="error" *ngIf="todoForm.get('title')?.invalid && todoForm.get('title')?.touched">
+          Le titre doit contenir au moins 3 caractères
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>Personne *</label>
+        <select formControlName="personId">
+          <option value="">Sélectionner une personne</option>
+          <option *ngFor="let person of persons" [value]="person.id">
+            {{ person.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Date début *</label>
+        <input type="date" formControlName="startDate" />
+      </div>
+
+      <div class="form-group">
+        <label>Date fin</label>
+        <input type="date" formControlName="endDate" />
+      </div>
+
+      <div class="form-group">
+        <label>Priorité *</label>
+        <select formControlName="priority">
+          <option value="">Sélectionner une priorité</option>
+          <option *ngFor="let priority of priorities" [value]="priority">
+            {{ priority }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Labels *</label>
+        <div class="checkbox-group">
+          <label *ngFor="let label of labels">
+            <input 
+              type="checkbox" 
+              [checked]="isLabelChecked(label)"
+              (change)="onLabelChange(label, $event)" />
+            {{ label }}
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description *</label>
+        <textarea formControlName="description" rows="4"></textarea>
+        <span class="error" *ngIf="todoForm.get('description')?.invalid && todoForm.get('description')?.touched">
+          La description doit contenir au moins 5 caractères
+        </span>
+      </div>
+
+      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <div class="modal-actions">
+        <button type="button" (click)="onClose()" class="btn-cancel">Annuler</button>
+        <button type="submit" class="btn-save">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+</div>

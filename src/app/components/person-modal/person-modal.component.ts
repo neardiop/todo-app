@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Person } from '../../models/person.model';
 
 @Component({
   selector: 'app-person-modal',
@@ -6,10 +8,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./person-modal.component.css']
 })
 export class PersonModalComponent implements OnInit {
+  @Input() person: Person | null = null;
+  @Output() save = new EventEmitter<Person>();
+  @Output() close = new EventEmitter<void>();
 
-  constructor() { }
+  personForm: FormGroup;
+  errorMessage = '';
 
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder) {
+    this.personForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]]
+    });
   }
 
+  ngOnInit(): void {
+    if (this.person) {
+      this.personForm.patchValue({
+        name: this.person.name,
+        email: this.person.email,
+        phone: this.person.phone
+      });
+    }
+  }
+
+  onSubmit(): void {
+    if (this.personForm.valid) {
+      const person: Person = {
+        ...this.person,
+        name: this.personForm.value.name,
+        email: this.personForm.value.email,
+        phone: this.personForm.value.phone
+      };
+      this.save.emit(person);
+    } else {
+      this.errorMessage = 'Veuillez remplir tous les champs correctement';
+    }
+  }
+
+  onClose(): void {
+    this.close.emit();
+  }
 }
