@@ -1,21 +1,21 @@
 <div class="modal-overlay" (click)="onClose()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2>{{ todo ? 'Éditer' : 'Ajouter' }} une tâche</h2>
+    <h2>{{ (todo ? 'taskModal.editTitle' : 'taskModal.addTitle') | transloco }}</h2>
     
     <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Titre *</mat-label>
+        <mat-label>{{ 'taskModal.fields.title' | transloco }} *</mat-label>
         <input matInput formControlName="title" />
         <mat-error *ngIf="todoForm.get('title')?.hasError('required')">
-          Le titre est requis
+          {{ 'taskModal.errors.titleRequired' | transloco }}
         </mat-error>
         <mat-error *ngIf="todoForm.get('title')?.hasError('minlength')">
-          Le titre doit contenir au moins 3 caractères
+          {{ 'taskModal.errors.titleMinLength' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Personne *</mat-label>
+        <mat-label>{{ 'taskModal.fields.person' | transloco }} *</mat-label>
         <input type="text" matInput formControlName="person" [matAutocomplete]="auto" />
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPerson">
           <mat-option *ngFor="let person of filteredPersons | async" [value]="person">
@@ -23,64 +23,64 @@
           </mat-option>
         </mat-autocomplete>
         <mat-error *ngIf="todoForm.get('person')?.hasError('required')">
-          Veuillez sélectionner une personne
+          {{ 'taskModal.errors.personRequired' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Date début *</mat-label>
+        <mat-label>{{ 'taskModal.fields.startDate' | transloco }} *</mat-label>
         <input matInput type="date" formControlName="startDate" />
         <mat-error *ngIf="todoForm.get('startDate')?.hasError('required')">
-          La date de début est requise
+          {{ 'taskModal.errors.startDateRequired' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Date fin</mat-label>
+        <mat-label>{{ 'taskModal.fields.endDate' | transloco }}</mat-label>
         <input matInput type="date" formControlName="endDate" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Priorité *</mat-label>
+        <mat-label>{{ 'taskModal.fields.priority' | transloco }} *</mat-label>
         <mat-select formControlName="priority">
           <mat-option *ngFor="let priority of priorities" [value]="priority">
-            {{ priority }}
+            {{ ('priority.' + priority) | transloco }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="todoForm.get('priority')?.hasError('required')">
-          La priorité est requise
+          {{ 'taskModal.errors.priorityRequired' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <div class="form-group">
-        <label>Labels *</label>
+        <label>{{ 'taskModal.fields.labels' | transloco }} *</label>
         <div class="checkbox-group">
           <label *ngFor="let label of labels">
             <input 
               type="checkbox" 
               [checked]="isLabelChecked(label)"
               (change)="onLabelChange(label, $event)" />
-            {{ label }}
+            {{ ('label.' + label) | transloco }}
           </label>
         </div>
       </div>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Description *</mat-label>
+        <mat-label>{{ 'taskModal.fields.description' | transloco }} *</mat-label>
         <textarea matInput formControlName="description" rows="4"></textarea>
         <mat-error *ngIf="todoForm.get('description')?.hasError('required')">
-          La description est requise
+          {{ 'taskModal.errors.descriptionRequired' | transloco }}
         </mat-error>
         <mat-error *ngIf="todoForm.get('description')?.hasError('minlength')">
-          La description doit contenir au moins 5 caractères
+          {{ 'taskModal.errors.descriptionMinLength' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
 
       <div class="modal-actions">
-        <button mat-button type="button" (click)="onClose()">Annuler</button>
-        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+        <button mat-button type="button" (click)="onClose()">{{ 'taskModal.buttons.cancel' | transloco }}</button>
+        <button mat-raised-button color="primary" type="submit">{{ 'taskModal.buttons.save' | transloco }}</button>
       </div>
     </form>
   </div>

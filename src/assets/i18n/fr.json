@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "tasks": "Tâches",
+    "persons": "Personnes",
+    "labels": "Labels",
+    "language": "Langue"
+  },
+  "tasks": {
+    "title": "Liste des Tâches",
+    "addButton": "Ajouter une tâche",
+    "columns": {
+      "actions": "Actions",
+      "title": "Titre",
+      "person": "Personne",
+      "startDate": "Date début",
+      "endDate": "Date fin",
+      "priority": "Priorité",
+      "labels": "Labels"
+    },
+    "deleteConfirm": "Supprimer cette tâche ?"
+  },
+  "persons": {
+    "title": "Liste des Personnes",
+    "addButton": "Ajouter une personne",
+    "columns": {
+      "actions": "Actions",
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone"
+    },
+    "deleteConfirm": "Supprimer cette personne ?"
+  },
+  "taskModal": {
+    "addTitle": "Ajouter une tâche",
+    "editTitle": "Éditer une tâche",
+    "fields": {
+      "title": "Titre",
+      "person": "Personne",
+      "startDate": "Date début",
+      "endDate": "Date fin",
+      "priority": "Priorité",
+      "labels": "Labels",
+      "description": "Description"
+    },
+    "errors": {
+      "titleRequired": "Le titre est requis",
+      "titleMinLength": "Le titre doit contenir au moins 3 caractères",
+      "personRequired": "Veuillez sélectionner une personne",
+      "personInvalid": "Veuillez sélectionner une personne valide dans la liste",
+      "startDateRequired": "La date de début est requise",
+      "priorityRequired": "La priorité est requise",
+      "descriptionRequired": "La description est requise",
+      "descriptionMinLength": "La description doit contenir au moins 5 caractères",
+      "endDateInvalid": "La date de fin doit être après la date de début",
+      "formInvalid": "Veuillez remplir tous les champs obligatoires correctement"
+    },
+    "buttons": {
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    }
+  },
+  "personModal": {
+    "addTitle": "Ajouter une personne",
+    "editTitle": "Éditer une personne",
+    "fields": {
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone"
+    },
+    "errors": {
+      "nameRequired": "Le nom est requis",
+      "nameMinLength": "Le nom doit contenir au moins 3 caractères",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Email invalide",
+      "phoneRequired": "Le téléphone est requis",
+      "phonePattern": "Le téléphone doit contenir 10 chiffres",
+      "formInvalid": "Veuillez remplir tous les champs correctement"
+    },
+    "buttons": {
+      "cancel": "Annuler",
+      "save": "Enregistrer"
+    }
+  },
+  "priority": {
+    "Facile": "Facile",
+    "Moyen": "Moyen",
+    "Difficile": "Difficile"
+  },
+  "label": {
+    "HTML": "HTML",
+    "CSS": "CSS",
+    "JQUERY": "jQuery",
+    "NODE_JS": "Node.js"
+  }
+}

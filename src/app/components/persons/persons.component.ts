@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../../services/person.service';
 import { Person } from '../../models/person.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-persons',
@@ -32,10 +33,20 @@ export class PersonsComponent implements OnInit {
     }
   };
 
-  constructor(private personService: PersonService) {}
+  constructor(
+    private personService: PersonService,
+    private translocoService: TranslocoService
+  ) {
+    this.translocoService.langChanges$.subscribe(() => {
+      this.updateTableSettings();
+    });
+  }
 
   ngOnInit(): void {
-    this.loadPersons();
+    this.translocoService.load(this.translocoService.getActiveLang()).subscribe(() => {
+      this.updateTableSettings();
+      this.loadPersons();
+    });
   }
 
   loadPersons(): void {
@@ -44,7 +55,37 @@ export class PersonsComponent implements OnInit {
     });
   }
 
-  openModal(person?: Person): void {
+  updateTableSettings(): void {
+    this.settings = {
+      actions: {
+        add: false,
+        edit: false,
+        delete: false,
+        custom: [
+          { name: 'edit', title: '<i class="fa fa-edit"></i>' },
+          { name: 'delete', title: '<i class="fa fa-trash"></i>' }
+        ]
+      },
+      columns: {
+        name: { title: this.translocoService.translate('persons.columns.name') },
+        email: { title: this.translocoService.translate('persons.columns.email') },
+        phone: { title: this.translocoService.translate('persons.columns.phone') }
+      },
+      pager: {
+        perPage: 10
+      }
+    };
+    
+    if (this.persons.length > 0) {
+      const temp = [...this.persons];
+      this.persons = [];
+      setTimeout(() => {
+        this.persons = temp;
+      }, 0);
+    }
+  }
+
+  openModal(person?: Person): void{
     this.selectedPerson = person || null;
     this.showModal = true;
   }
@@ -72,7 +113,7 @@ export class PersonsComponent implements OnInit {
     if (event.action === 'edit') {
       this.openModal(event.data);
     } else if (event.action === 'delete') {
-      if (confirm('Supprimer cette personne ?')) {
+      if (confirm(this.translocoService.translate('persons.deleteConfirm'))) {
         this.personService.deletePerson(event.data.id).subscribe(() => {
           this.loadPersons();
         });

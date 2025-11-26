@@ -24,6 +24,7 @@ import { TodosComponent } from './components/todos/todos.component';
 import { TodoModalComponent } from './components/todo-modal/todo-modal.component';
 import { PersonsComponent } from './components/persons/persons.component';
 import { PersonModalComponent } from './components/person-modal/person-modal.component';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PersonModalComponent } from './components/person-modal/person-modal.com
     MatListModule,
     MatChipsModule,
     MatAutocompleteModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    TranslocoRootModule
   ],
   providers: [],
   bootstrap: [AppComponent]

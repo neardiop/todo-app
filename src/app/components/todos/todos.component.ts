@@ -3,6 +3,7 @@ import { TodoService } from '../../services/todo.service';
 import { PersonService } from '../../services/person.service';
 import { Todo, Priority, Label } from '../../models/todo.model';
 import { Person } from '../../models/person.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-todos',
@@ -13,8 +14,10 @@ export class TodosComponent implements OnInit {
   todos: Todo[] = [];
   showModal = false;
   selectedTodo: Todo | null = null;
+  persons: Person[] = [];
+  settings: any;
   
-  settings = {
+  defaultSettings = {
     actions: {
       add: false,
       edit: false,
@@ -49,17 +52,68 @@ export class TodosComponent implements OnInit {
 
   constructor(
     private todoService: TodoService,
-    private personService: PersonService
-  ) {}
+    private personService: PersonService,
+    private translocoService: TranslocoService
+  ) {
+    this.translocoService.langChanges$.subscribe(() => {
+      this.updateTableSettings();
+    });
+  }
 
   ngOnInit(): void {
-    this.loadTodos();
+    this.translocoService.load(this.translocoService.getActiveLang()).subscribe(() => {
+      this.updateTableSettings();
+      this.loadTodos();
+    });
   }
 
   loadTodos(): void {
     this.todoService.getTodos().subscribe(data => {
       this.todos = data;
     });
+  }
+
+  updateTableSettings(): void {
+    this.settings = {
+      actions: {
+        add: false,
+        edit: false,
+        delete: false,
+        custom: [
+          { name: 'edit', title: '<i class="fa fa-edit"></i>' },
+          { name: 'delete', title: '<i class="fa fa-trash"></i>' }
+        ]
+      },
+      columns: {
+        title: { title: this.translocoService.translate('tasks.columns.title') },
+        person: { 
+          title: this.translocoService.translate('tasks.columns.person'),
+          valuePrepareFunction: (person: Person) => {
+            return person ? person.name : '';
+          }
+        },
+        startDate: { title: this.translocoService.translate('tasks.columns.startDate') },
+        endDate: { title: this.translocoService.translate('tasks.columns.endDate') },
+        priority: { title: this.translocoService.translate('tasks.columns.priority') },
+        labels: { 
+          title: this.translocoService.translate('tasks.columns.labels'),
+          valuePrepareFunction: (labels: Label[]) => {
+            return labels ? labels.join(', ') : '';
+          }
+        }
+      },
+      pager: {
+        perPage: 10
+      }
+    };
+    
+    if (this.todos.length > 0) {
+      const temp = [...this.todos];
+      this.todos = [];
+      setTimeout(() => {
+        this.todos = temp;
+      }, 0);
+    }
   }
 
   openModal(todo?: Todo): void {
@@ -90,7 +144,7 @@ export class TodosComponent implements OnInit {
     if (event.action === 'edit') {
       this.openModal(event.data);
     } else if (event.action === 'delete') {
-      if (confirm('Supprimer cette tâche ?')) {
+      if (confirm(this.translocoService.translate('tasks.deleteConfirm'))) {
         this.todoService.deleteTodo(event.data.id).subscribe(() => {
           this.loadTodos();
         });

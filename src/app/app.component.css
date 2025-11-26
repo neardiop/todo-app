@@ -17,7 +17,12 @@
   font-size: 1.25rem;
   font-weight: 500;
   color: #333;
-  margin: 0;
+  margin: 0 0 1rem 0;
+}
+
+.language-selector {
+  width: 100%;
+  font-size: 0.875rem;
 }
 
 .mat-list-item {

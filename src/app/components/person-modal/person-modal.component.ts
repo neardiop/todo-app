@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Person } from '../../models/person.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-person-modal',
@@ -15,7 +16,10 @@ export class PersonModalComponent implements OnInit {
   personForm: FormGroup;
   errorMessage = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private translocoService: TranslocoService
+  ) {
     this.personForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
@@ -41,7 +45,7 @@ export class PersonModalComponent implements OnInit {
     });
     
     if (!this.personForm.valid) {
-      this.errorMessage = 'Veuillez remplir tous les champs correctement';
+      this.errorMessage = this.translocoService.translate('personModal.errors.formInvalid');
       return;
     }
     

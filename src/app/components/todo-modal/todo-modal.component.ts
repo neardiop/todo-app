@@ -5,6 +5,7 @@ import { Person } from '../../models/person.model';
 import { PersonService } from '../../services/person.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-todo-modal',
@@ -25,7 +26,8 @@ export class TodoModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private personService: PersonService
+    private personService: PersonService,
+    private translocoService: TranslocoService
   ) {
     this.todoForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
@@ -104,7 +106,7 @@ export class TodoModalComponent implements OnInit {
     });
     
     if (!this.todoForm.valid) {
-      this.errorMessage = 'Veuillez remplir tous les champs obligatoires correctement';
+      this.errorMessage = this.translocoService.translate('taskModal.errors.formInvalid');
       return;
     }
 
@@ -112,14 +114,14 @@ export class TodoModalComponent implements OnInit {
     const person = formValue.person;
     
     if (!person || typeof person === 'string') {
-      this.errorMessage = 'Veuillez sélectionner une personne valide dans la liste';
+      this.errorMessage = this.translocoService.translate('taskModal.errors.personInvalid');
       return;
     }
 
     const endDate = formValue.endDate || undefined;
     
     if (endDate && new Date(endDate) < new Date(formValue.startDate)) {
-      this.errorMessage = 'La date de fin doit être après la date de début';
+      this.errorMessage = this.translocoService.translate('taskModal.errors.endDateInvalid');
       return;
     }
 

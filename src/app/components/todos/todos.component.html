@@ -1,9 +1,9 @@
 <div class="container">
   <div class="header">
-    <h1>Liste des Tâches</h1>
+    <h1>{{ 'tasks.title' | transloco }}</h1>
     <button mat-raised-button color="primary" (click)="openModal()">
       <mat-icon>add</mat-icon>
-      Ajouter une tâche
+      {{ 'tasks.addButton' | transloco }}
     </button>
   </div>
   

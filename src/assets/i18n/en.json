@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "tasks": "Tasks",
+    "persons": "Persons",
+    "labels": "Labels",
+    "language": "Language"
+  },
+  "tasks": {
+    "title": "Task List",
+    "addButton": "Add Task",
+    "columns": {
+      "actions": "Actions",
+      "title": "Title",
+      "person": "Person",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "priority": "Priority",
+      "labels": "Labels"
+    },
+    "deleteConfirm": "Delete this task?"
+  },
+  "persons": {
+    "title": "Person List",
+    "addButton": "Add Person",
+    "columns": {
+      "actions": "Actions",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "deleteConfirm": "Delete this person?"
+  },
+  "taskModal": {
+    "addTitle": "Add Task",
+    "editTitle": "Edit Task",
+    "fields": {
+      "title": "Title",
+      "person": "Person",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "priority": "Priority",
+      "labels": "Labels",
+      "description": "Description"
+    },
+    "errors": {
+      "titleRequired": "Title is required",
+      "titleMinLength": "Title must be at least 3 characters",
+      "personRequired": "Please select a person",
+      "personInvalid": "Please select a valid person from the list",
+      "startDateRequired": "Start date is required",
+      "priorityRequired": "Priority is required",
+      "descriptionRequired": "Description is required",
+      "descriptionMinLength": "Description must be at least 5 characters",
+      "endDateInvalid": "End date must be after start date",
+      "formInvalid": "Please fill all required fields correctly"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  },
+  "personModal": {
+    "addTitle": "Add Person",
+    "editTitle": "Edit Person",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameMinLength": "Name must be at least 3 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email",
+      "phoneRequired": "Phone is required",
+      "phonePattern": "Phone must contain 10 digits",
+      "formInvalid": "Please fill all fields correctly"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save"
+    }
+  },
+  "priority": {
+    "Facile": "Easy",
+    "Moyen": "Medium",
+    "Difficile": "Hard"
+  },
+  "label": {
+    "HTML": "HTML",
+    "CSS": "CSS",
+    "JQUERY": "jQuery",
+    "NODE_JS": "Node.js"
+  }
+}

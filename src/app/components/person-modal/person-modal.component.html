@@ -1,46 +1,46 @@
 <div class="modal-overlay" (click)="onClose()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2>{{ person ? 'Éditer' : 'Ajouter' }} une personne</h2>
+    <h2>{{ (person ? 'personModal.editTitle' : 'personModal.addTitle') | transloco }}</h2>
     
     <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nom *</mat-label>
+        <mat-label>{{ 'personModal.fields.name' | transloco }} *</mat-label>
         <input matInput formControlName="name" />
         <mat-error *ngIf="personForm.get('name')?.hasError('required')">
-          Le nom est requis
+          {{ 'personModal.errors.nameRequired' | transloco }}
         </mat-error>
         <mat-error *ngIf="personForm.get('name')?.hasError('minlength')">
-          Le nom doit contenir au moins 3 caractères
+          {{ 'personModal.errors.nameMinLength' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Email *</mat-label>
+        <mat-label>{{ 'personModal.fields.email' | transloco }} *</mat-label>
         <input matInput type="email" formControlName="email" />
         <mat-error *ngIf="personForm.get('email')?.hasError('required')">
-          L'email est requis
+          {{ 'personModal.errors.emailRequired' | transloco }}
         </mat-error>
         <mat-error *ngIf="personForm.get('email')?.hasError('email')">
-          Email invalide
+          {{ 'personModal.errors.emailInvalid' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Téléphone *</mat-label>
+        <mat-label>{{ 'personModal.fields.phone' | transloco }} *</mat-label>
         <input matInput type="tel" formControlName="phone" />
         <mat-error *ngIf="personForm.get('phone')?.hasError('required')">
-          Le téléphone est requis
+          {{ 'personModal.errors.phoneRequired' | transloco }}
         </mat-error>
         <mat-error *ngIf="personForm.get('phone')?.hasError('pattern')">
-          Le téléphone doit contenir 10 chiffres
+          {{ 'personModal.errors.phonePattern' | transloco }}
         </mat-error>
       </mat-form-field>
 
       <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
 
       <div class="modal-actions">
-        <button mat-button type="button" (click)="onClose()">Annuler</button>
-        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+        <button mat-button type="button" (click)="onClose()">{{ 'personModal.buttons.cancel' | transloco }}</button>
+        <button mat-raised-button color="primary" type="submit">{{ 'personModal.buttons.save' | transloco }}</button>
       </div>
     </form>
   </div>
