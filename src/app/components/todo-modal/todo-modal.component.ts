@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Todo, Priority, Label } from '../../models/todo.model';
 import { Person } from '../../models/person.model';
 import { PersonService } from '../../services/person.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-modal',
@@ -16,6 +18,7 @@ export class TodoModalComponent implements OnInit {
 
   todoForm: FormGroup;
   persons: Person[] = [];
+  filteredPersons: Observable<Person[]>;
   priorities = Object.values(Priority);
   labels = Object.values(Label);
   errorMessage = '';
@@ -26,13 +29,18 @@ export class TodoModalComponent implements OnInit {
   ) {
     this.todoForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
-      personId: ['', Validators.required],
+      person: [null, Validators.required],
       startDate: ['', Validators.required],
       endDate: [''],
       priority: ['', Validators.required],
       labels: [[], Validators.required],
       description: ['', [Validators.required, Validators.minLength(5)]]
     });
+    
+    this.filteredPersons = this.todoForm.get('person')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterPersons(value))
+    );
   }
 
   ngOnInit(): void {
@@ -40,7 +48,7 @@ export class TodoModalComponent implements OnInit {
     if (this.todo) {
       this.todoForm.patchValue({
         title: this.todo.title,
-        personId: this.todo.person.id,
+        person: this.todo.person,
         startDate: this.todo.startDate,
         endDate: this.todo.endDate,
         priority: this.todo.priority,
@@ -54,6 +62,20 @@ export class TodoModalComponent implements OnInit {
     this.personService.getPersons().subscribe(data => {
       this.persons = data;
     });
+  }
+
+  private _filterPersons(value: any): Person[] {
+    if (!value) {
+      return this.persons;
+    }
+    const filterValue = typeof value === 'string' ? value.toLowerCase() : value.name?.toLowerCase() || '';
+    return this.persons.filter(person => 
+      person.name.toLowerCase().includes(filterValue)
+    );
+  }
+
+  displayPerson(person: Person): string {
+    return person ? person.name : '';
   }
 
   onLabelChange(label: Label, event: any): void {
@@ -75,38 +97,44 @@ export class TodoModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.todoForm.valid) {
-      const personId = this.todoForm.value.personId;
-      const person = this.persons.find(p => p.id === +personId);
-      
-      if (!person) {
-        this.errorMessage = 'Personne invalide';
-        return;
-      }
-
-      const formValue = this.todoForm.value;
-      const endDate = formValue.endDate || undefined;
-      
-      if (endDate && new Date(endDate) < new Date(formValue.startDate)) {
-        this.errorMessage = 'La date de fin doit être après la date de début';
-        return;
-      }
-
-      const todo: Todo = {
-        ...this.todo,
-        title: formValue.title,
-        person: person,
-        startDate: formValue.startDate,
-        endDate: endDate,
-        priority: formValue.priority,
-        labels: formValue.labels,
-        description: formValue.description
-      };
-
-      this.save.emit(todo);
-    } else {
-      this.errorMessage = 'Veuillez remplir tous les champs obligatoires';
+    this.errorMessage = '';
+    
+    Object.keys(this.todoForm.controls).forEach(key => {
+      this.todoForm.get(key)?.markAsTouched();
+    });
+    
+    if (!this.todoForm.valid) {
+      this.errorMessage = 'Veuillez remplir tous les champs obligatoires correctement';
+      return;
     }
+
+    const formValue = this.todoForm.value;
+    const person = formValue.person;
+    
+    if (!person || typeof person === 'string') {
+      this.errorMessage = 'Veuillez sélectionner une personne valide dans la liste';
+      return;
+    }
+
+    const endDate = formValue.endDate || undefined;
+    
+    if (endDate && new Date(endDate) < new Date(formValue.startDate)) {
+      this.errorMessage = 'La date de fin doit être après la date de début';
+      return;
+    }
+
+    const todo: Todo = {
+      ...this.todo,
+      title: formValue.title,
+      person: person,
+      startDate: formValue.startDate,
+      endDate: endDate,
+      priority: formValue.priority,
+      labels: formValue.labels,
+      description: formValue.description
+    };
+
+    this.save.emit(todo);
   }
 
   onClose(): void {

@@ -3,35 +3,44 @@
     <h2>{{ person ? 'Éditer' : 'Ajouter' }} une personne</h2>
     
     <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Nom *</label>
-        <input type="text" formControlName="name" />
-        <span class="error" *ngIf="personForm.get('name')?.invalid && personForm.get('name')?.touched">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom *</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="personForm.get('name')?.hasError('required')">
+          Le nom est requis
+        </mat-error>
+        <mat-error *ngIf="personForm.get('name')?.hasError('minlength')">
           Le nom doit contenir au moins 3 caractères
-        </span>
-      </div>
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Email *</label>
-        <input type="email" formControlName="email" />
-        <span class="error" *ngIf="personForm.get('email')?.invalid && personForm.get('email')?.touched">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email *</mat-label>
+        <input matInput type="email" formControlName="email" />
+        <mat-error *ngIf="personForm.get('email')?.hasError('required')">
+          L'email est requis
+        </mat-error>
+        <mat-error *ngIf="personForm.get('email')?.hasError('email')">
           Email invalide
-        </span>
-      </div>
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Téléphone *</label>
-        <input type="tel" formControlName="phone" />
-        <span class="error" *ngIf="personForm.get('phone')?.invalid && personForm.get('phone')?.touched">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Téléphone *</mat-label>
+        <input matInput type="tel" formControlName="phone" />
+        <mat-error *ngIf="personForm.get('phone')?.hasError('required')">
+          Le téléphone est requis
+        </mat-error>
+        <mat-error *ngIf="personForm.get('phone')?.hasError('pattern')">
           Le téléphone doit contenir 10 chiffres
-        </span>
-      </div>
+        </mat-error>
+      </mat-form-field>
 
       <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
 
       <div class="modal-actions">
-        <button type="button" (click)="onClose()" class="btn-cancel">Annuler</button>
-        <button type="submit" class="btn-save">Enregistrer</button>
+        <button mat-button type="button" (click)="onClose()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
       </div>
     </form>
   </div>

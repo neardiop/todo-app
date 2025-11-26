@@ -21,6 +21,12 @@
   overflow-y: auto;
 }
 
+.full-width {
+  width: 100%;
+  display: block;
+  margin-bottom: 1rem;
+}
+
 h2 {
   margin-top: 0;
 }

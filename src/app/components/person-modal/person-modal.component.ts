@@ -34,17 +34,24 @@ export class PersonModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.personForm.valid) {
-      const person: Person = {
-        ...this.person,
-        name: this.personForm.value.name,
-        email: this.personForm.value.email,
-        phone: this.personForm.value.phone
-      };
-      this.save.emit(person);
-    } else {
+    this.errorMessage = '';
+    
+    Object.keys(this.personForm.controls).forEach(key => {
+      this.personForm.get(key)?.markAsTouched();
+    });
+    
+    if (!this.personForm.valid) {
       this.errorMessage = 'Veuillez remplir tous les champs correctement';
+      return;
     }
+    
+    const person: Person = {
+      ...this.person,
+      name: this.personForm.value.name,
+      email: this.personForm.value.email,
+      phone: this.personForm.value.phone
+    };
+    this.save.emit(person);
   }
 
   onClose(): void {

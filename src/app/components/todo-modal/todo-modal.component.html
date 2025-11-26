@@ -3,43 +3,54 @@
     <h2>{{ todo ? 'Éditer' : 'Ajouter' }} une tâche</h2>
     
     <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Titre *</label>
-        <input type="text" formControlName="title" />
-        <span class="error" *ngIf="todoForm.get('title')?.invalid && todoForm.get('title')?.touched">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Titre *</mat-label>
+        <input matInput formControlName="title" />
+        <mat-error *ngIf="todoForm.get('title')?.hasError('required')">
+          Le titre est requis
+        </mat-error>
+        <mat-error *ngIf="todoForm.get('title')?.hasError('minlength')">
           Le titre doit contenir au moins 3 caractères
-        </span>
-      </div>
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Personne *</label>
-        <select formControlName="personId">
-          <option value="">Sélectionner une personne</option>
-          <option *ngFor="let person of persons" [value]="person.id">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Personne *</mat-label>
+        <input type="text" matInput formControlName="person" [matAutocomplete]="auto" />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPerson">
+          <mat-option *ngFor="let person of filteredPersons | async" [value]="person">
             {{ person.name }}
-          </option>
-        </select>
-      </div>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="todoForm.get('person')?.hasError('required')">
+          Veuillez sélectionner une personne
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Date début *</label>
-        <input type="date" formControlName="startDate" />
-      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date début *</mat-label>
+        <input matInput type="date" formControlName="startDate" />
+        <mat-error *ngIf="todoForm.get('startDate')?.hasError('required')">
+          La date de début est requise
+        </mat-error>
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Date fin</label>
-        <input type="date" formControlName="endDate" />
-      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Date fin</mat-label>
+        <input matInput type="date" formControlName="endDate" />
+      </mat-form-field>
 
-      <div class="form-group">
-        <label>Priorité *</label>
-        <select formControlName="priority">
-          <option value="">Sélectionner une priorité</option>
-          <option *ngFor="let priority of priorities" [value]="priority">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Priorité *</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option *ngFor="let priority of priorities" [value]="priority">
             {{ priority }}
-          </option>
-        </select>
-      </div>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="todoForm.get('priority')?.hasError('required')">
+          La priorité est requise
+        </mat-error>
+      </mat-form-field>
 
       <div class="form-group">
         <label>Labels *</label>
@@ -54,19 +65,22 @@
         </div>
       </div>
 
-      <div class="form-group">
-        <label>Description *</label>
-        <textarea formControlName="description" rows="4"></textarea>
-        <span class="error" *ngIf="todoForm.get('description')?.invalid && todoForm.get('description')?.touched">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description *</mat-label>
+        <textarea matInput formControlName="description" rows="4"></textarea>
+        <mat-error *ngIf="todoForm.get('description')?.hasError('required')">
+          La description est requise
+        </mat-error>
+        <mat-error *ngIf="todoForm.get('description')?.hasError('minlength')">
           La description doit contenir au moins 5 caractères
-        </span>
-      </div>
+        </mat-error>
+      </mat-form-field>
 
       <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
 
       <div class="modal-actions">
-        <button type="button" (click)="onClose()" class="btn-cancel">Annuler</button>
-        <button type="submit" class="btn-save">Enregistrer</button>
+        <button mat-button type="button" (click)="onClose()">Annuler</button>
+        <button mat-raised-button color="primary" type="submit">Enregistrer</button>
       </div>
     </form>
   </div>

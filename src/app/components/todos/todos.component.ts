@@ -26,11 +26,21 @@ export class TodosComponent implements OnInit {
     },
     columns: {
       title: { title: 'Titre' },
-      'person.name': { title: 'Personne' },
+      person: { 
+        title: 'Personne',
+        valuePrepareFunction: (person: Person) => {
+          return person ? person.name : '';
+        }
+      },
       startDate: { title: 'Date début' },
       endDate: { title: 'Date fin' },
       priority: { title: 'Priorité' },
-      labels: { title: 'Labels' }
+      labels: { 
+        title: 'Labels',
+        valuePrepareFunction: (labels: Label[]) => {
+          return labels ? labels.join(', ') : '';
+        }
+      }
     },
     pager: {
       perPage: 10
