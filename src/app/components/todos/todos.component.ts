@@ -4,6 +4,7 @@ import { PersonService } from '../../services/person.service';
 import { Todo, Priority, Label } from '../../models/todo.model';
 import { Person } from '../../models/person.model';
 import { TranslocoService } from '@ngneat/transloco';
+import { ExportService } from '../../services/export.service';
 
 @Component({
   selector: 'app-todos',
@@ -53,7 +54,8 @@ export class TodosComponent implements OnInit {
   constructor(
     private todoService: TodoService,
     private personService: PersonService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private exportService: ExportService
   ) {
     this.translocoService.langChanges$.subscribe(() => {
       this.updateTableSettings();
@@ -150,5 +152,13 @@ export class TodosComponent implements OnInit {
         });
       }
     }
+  }
+
+  exportToExcel(): void {
+    this.exportService.exportToExcel(this.todos, 'taches');
+  }
+
+  exportToPDF(): void {
+    this.exportService.exportToPDF(this.todos, 'taches');
   }
 }

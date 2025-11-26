@@ -8,6 +8,8 @@
   "tasks": {
     "title": "Task List",
     "addButton": "Add Task",
+    "exportExcel": "Excel",
+    "exportPDF": "PDF",
     "columns": {
       "actions": "Actions",
       "title": "Title",

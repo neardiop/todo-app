@@ -8,6 +8,8 @@
   "tasks": {
     "title": "Liste des Tâches",
     "addButton": "Ajouter une tâche",
+    "exportExcel": "Excel",
+    "exportPDF": "PDF",
     "columns": {
       "actions": "Actions",
       "title": "Titre",

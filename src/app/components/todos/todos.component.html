@@ -1,10 +1,20 @@
 <div class="container">
   <div class="header">
     <h1>{{ 'tasks.title' | transloco }}</h1>
-    <button mat-raised-button color="primary" (click)="openModal()">
-      <mat-icon>add</mat-icon>
-      {{ 'tasks.addButton' | transloco }}
-    </button>
+    <div class="header-actions">
+      <button mat-button (click)="exportToExcel()">
+        <mat-icon>description</mat-icon>
+        Excel
+      </button>
+      <button mat-button (click)="exportToPDF()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        PDF
+      </button>
+      <button mat-raised-button color="primary" (click)="openModal()">
+        <mat-icon>add</mat-icon>
+        {{ 'tasks.addButton' | transloco }}
+      </button>
+    </div>
   </div>
   
   <div class="table-container">
