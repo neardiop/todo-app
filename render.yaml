@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: todo-app-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm run server
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
