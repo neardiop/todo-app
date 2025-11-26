@@ -62,8 +62,8 @@ export class PersonsComponent implements OnInit {
         edit: false,
         delete: false,
         custom: [
-          { name: 'edit', title: '<i class="fa fa-edit"></i>' },
-          { name: 'delete', title: '<i class="fa fa-trash"></i>' }
+          { name: 'edit', title: '<i class="material-icons">edit</i>' },
+          { name: 'delete', title: '<i class="material-icons">delete</i>' }
         ]
       },
       columns: {

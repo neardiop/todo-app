@@ -23,35 +23,131 @@ ng2-smart-table {
 
 ng2-smart-table table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: white;
 }
 
 ng2-smart-table th,
 ng2-smart-table td {
-  padding: 1rem;
+  padding: 1.25rem 1rem;
   text-align: left;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e8eaf6;
 }
 
-ng2-smart-table th {
-  background: #fafafa;
-  font-weight: 500;
-  color: #666;
+ng2-smart-table thead tr.ng2-smart-titles {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+ng2-smart-table thead tr.ng2-smart-titles th {
+  background: transparent !important;
+  color: white !important;
+  font-weight: 600;
   font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: none !important;
+}
+
+ng2-smart-table thead tr.ng2-smart-filters {
+  background: #f8f9ff !important;
+}
+
+ng2-smart-table thead tr.ng2-smart-filters th {
+  padding: 0.75rem 1rem !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+ng2-smart-table thead tr.ng2-smart-filters input,
+ng2-smart-table thead tr.ng2-smart-filters select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  background: white;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+ng2-smart-table thead tr.ng2-smart-filters input:focus,
+ng2-smart-table thead tr.ng2-smart-filters select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+ng2-smart-table thead tr.ng2-smart-filters input::placeholder {
+  color: #bdbdbd;
+  font-style: italic;
+}
+
+ng2-smart-table th:first-child {
+  border-top-left-radius: 8px;
+}
+
+ng2-smart-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+ng2-smart-table tbody tr {
+  transition: all 0.3s ease;
 }
 
 ng2-smart-table tbody tr:hover {
-  background: #f5f5f5;
+  background: #f5f7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+ng2-smart-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+ng2-smart-table td {
+  color: #37474f;
+  font-size: 0.9rem;
 }
 
 ng2-smart-table a {
-  color: #5e72e4;
+  color: #667eea;
   cursor: pointer;
   margin: 0 0.5rem;
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
 ng2-smart-table a:hover {
-  text-decoration: underline;
+  color: #764ba2;
+  text-decoration: none;
+}
+
+ng2-smart-table .ng2-smart-actions {
+  text-align: center;
+}
+
+ng2-smart-table .ng2-smart-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin: 0 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+}
+
+ng2-smart-table .ng2-smart-action:hover {
+  background: #e8eaf6;
+}
+
+ng2-smart-table .ng2-smart-action .material-icons {
+  font-size: 18px;
+  color: #667eea;
+}
+
+ng2-smart-table .ng2-smart-action:hover .material-icons {
+  color: #764ba2;
 }

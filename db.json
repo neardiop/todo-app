@@ -1,19 +1,19 @@
 {
   "persons": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Jean Dupont",
       "email": "jean.dupont@email.com",
       "phone": "0612345678"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Marie Martin",
       "email": "marie.martin@email.com",
       "phone": "0623456789"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Pierre Durand",
       "email": "pierre.durand@email.com",
       "phone": "0634567890"
@@ -21,7 +21,7 @@
   ],
   "todos": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Créer la page d'accueil",
       "person": {
         "id": 1,
@@ -32,11 +32,14 @@
       "startDate": "2024-01-15",
       "endDate": "2024-01-20",
       "priority": "Facile",
-      "labels": ["HTML", "CSS"],
+      "labels": [
+        "HTML",
+        "CSS"
+      ],
       "description": "Développer la page d'accueil du site"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Intégrer l'API REST",
       "person": {
         "id": 2,
@@ -45,12 +48,14 @@
         "phone": "0623456789"
       },
       "startDate": "2024-01-16",
-      "priority": "Difficile",
-      "labels": ["NODE_JS"],
+      "priority": "Moyen",
+      "labels": [
+        "NODE_JS"
+      ],
       "description": "Mettre en place les endpoints de l'API"
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Ajouter des animations",
       "person": {
         "id": 3,
@@ -61,7 +66,10 @@
       "startDate": "2024-01-17",
       "endDate": "2024-01-25",
       "priority": "Moyen",
-      "labels": ["JQUERY", "CSS"],
+      "labels": [
+        "JQUERY",
+        "CSS"
+      ],
       "description": "Améliorer l'expérience utilisateur avec des animations"
     }
   ]
